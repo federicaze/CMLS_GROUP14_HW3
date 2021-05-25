@@ -7,6 +7,8 @@ SerialPort.devices;
 ~port = SerialPort.new("COM3", 9600);
 
 
+~val =18;
+if((~val >= 1025 && ~val < 2050), {postln("ok")});
 // We define a routine that reads incoming value from Arduino and assign them to the correct parameter of the synth
 (
 ~charArray = [ ];
@@ -17,15 +19,15 @@ SerialPort.devices;
 		if(ascii == $a,{
 			~val = ~charArray.collect(_.digit).convertDigits;
 			~charArray = [ ];
-			if(~val < 1025, {~pCarFreq = ~val});
-			if(~val >= 1025 && ~val < 2050, {~pCarPart = ~val});
-			if(~val >= 2050 && ~val < 3075, {~pModFreq = ~val});
-			if(~val >= 3075 && ~val < 4100, {~pModIndex = ~val});
-			if(~val >= 4100 && ~val < 5125, {~pMod2Freq = ~val});
-			if(~val >= 5125 && ~val < 6150, {~pAmp = ~val});
-			if(~val >= 6150 && ~val < 7175, {~pPan = ~val});
-			if(~val >= 7175 && ~val < 8200, {~pModPart = ~val});
-			if(~val >= 8200, {~pMod2Index = ~val});
+			if(~val < 1025, {~pCarFreq = round(~val.linlin(0, 1024, 0, 3000)*1000)/1000});
+			if((~val >= 1025) and: (~val < 2050), {~pCarPart = round(~val.linlin(1025, 2049, 1, 8)*1000)/1000});
+			if((~val >= 2050) and: (~val < 3075), {~pModFreq = round(~val.linlin(2050, 3074, 0, 3000)*1000)/1000});
+			if((~val >= 3075) and: (~val < 4100), {~pModIndex = round(~val.linlin(3075, 4099, 1, 8)*1000)/1000});
+			if((~val >= 4100) and: (~val < 5125), {~pMod2Freq = round(~val.linlin(4100, 5124, 0, 3000)*1000)/1000});
+			if((~val >= 5125) and: (~val < 6150), {~pAmp = round(~val.linlin(5125, 6149, 0, 1)*1000)/1000});
+			if((~val >= 6150) and: (~val < 7175), {~pPan = round(~val.linlin(6150, 7174, -1, 1)*1000)/1000});
+			if((~val >= 7175) and: (~val < 8200), {~pModPart = round(~val.linlin(7175, 8199, 0, 10)*1000)/1000});
+			if(~val >= 8200, {~pMod2Index = round(~val.linlin(8200, 9224, 1, 8)*1000)/1000});
 		})
 	}.loop;}
 ).play;
@@ -59,7 +61,7 @@ SynthDef(\fmSynth, {
 (
 ~control = Routine.new({
 	var b = NetAddr.new("127.0.0.1", 12000);
-	{~x.set(\carFreq, ~pCarFreq.linlin(0, 1024, 0, 3000), \carPartial, ~pCarPart.linlin(1025, 2049, 1, 8), \modFreq, ~pModFreq.linlin(2050, 3074, 0, 3000), \modPart, ~pModPart.linlin(7175, 8199, 0, 10), \modIndex, ~pModIndex.linlin(3075, 4099, 1, 8), \mod2Freq, ~pMod2Freq.linlin(4100, 5124, 0, 3000), \mod2Partial, ~pMod2Index.linlin(8200, 9224, 1, 8), \amp, ~pAmp.linlin(5125, 6149, 0, 1), \pan, ~pPan.linlin(6150, 7174, -1, 1));
+	{~x.set(\carFreq, ~pCarFreq, \carPartial, ~pCarPart, \modFreq, ~pModFreq, \modPart, ~pModPart, \modIndex, ~pModIndex, \mod2Freq, ~pMod2Freq, \mod2Index, ~pMod2Index, \amp, ~pAmp, \pan, ~pPan);
 		b.sendMsg('/parameters', ~pCarFreq, ~pCarPart, ~pModFreq, ~pModIndex, ~pModPart, ~pMod2Freq, ~pMod2Index, ~pAmp, ~pPan);
 		0.01.wait;
 }.loop;}

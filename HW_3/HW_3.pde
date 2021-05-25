@@ -49,7 +49,6 @@ void setup() {
      .setRadius(120)
      .setHeight(150)
      .setRange(-1, 1)
-     .setDecimalPrecision(1)
      .setValue(0)
      .setColorBackground(color(#E4A82E))
      .setColorForeground(color(#1C6587))
@@ -240,12 +239,12 @@ void draw() {
   for(float theta = 0; theta <= 2 * PI; theta += 0.01){
     float rad = r(
       theta,
-      1.0 + 100.0 * pamp,                                               //a
-      1.0 + 100.0 * pamp,                                               //b
-      100.0 + (pcarfreq/10.0),                                          //m
-      4,                                                                //n1
-      0.05 * sin((50+(pmodfreq/60))*t) + 1 + pmodpart/10 + pmodindex/8, //n2
-      0.05 * cos((50+(pmod2freq/60))*t) + 1 + pmod2index                //n3
+      1.0 + 30.0 * pamp,                                                                           //a
+      1.0 + 30.0 * pamp,                                                                           //b
+      100.0 + (pcarfreq/10.0),                                                                     //m
+      4.0,                                                                                         //n1
+      0.05 * sin((50.0+(pmodfreq/10.0))*t) + 1 + pmodpart/50.0 + pmodindex/40.0 + pmod2index/50.0, //n2
+      0.05 * cos((50.0+(pmod2freq/10.0))*t) + 1                                                    //n3
     );
     float x = (1.75/12.0)*width * ppan + (8.25/12.0)*width + rad * cos(theta) * 50;
     float y = height/4 + rad * sin(theta) * 50;
@@ -279,7 +278,6 @@ float r(float theta, float a, float b, float m, float n1, float n2, float n3) {
 
 // We use this function to read incoming messages from Supercollider
 void oscEvent(OscMessage theOscMessage) {
-
   pcarfreq = theOscMessage.get(0).floatValue();
   pcarpart = theOscMessage.get(1).floatValue();
   pmodfreq = theOscMessage.get(2).floatValue();
