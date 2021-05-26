@@ -7,8 +7,6 @@ SerialPort.devices;
 ~port = SerialPort.new("COM3", 9600);
 
 
-~val =18;
-if((~val >= 1025 && ~val < 2050), {postln("ok")});
 // We define a routine that reads incoming value from Arduino and assign them to the correct parameter of the synth
 (
 ~charArray = [ ];
@@ -24,7 +22,7 @@ if((~val >= 1025 && ~val < 2050), {postln("ok")});
 			if((~val >= 2050) and: (~val < 3075), {~pModFreq = round(~val.linlin(2050, 3074, 0, 3000)*1000)/1000});
 			if((~val >= 3075) and: (~val < 4100), {~pModIndex = round(~val.linlin(3075, 4099, 1, 8)*1000)/1000});
 			if((~val >= 4100) and: (~val < 5125), {~pMod2Freq = round(~val.linlin(4100, 5124, 0, 3000)*1000)/1000});
-			if((~val >= 5125) and: (~val < 6150), {~pAmp = round(~val.linlin(5125, 6149, 0, 1)*1000)/1000});
+			if((~val >= 5125) and: (~val < 6150), {~pAmp = round(~val.linlin(5125, 6149, 0, 0.2)*1000)/1000});
 			if((~val >= 6150) and: (~val < 7175), {~pPan = round(~val.linlin(6150, 7174, -1, 1)*1000)/1000});
 			if((~val >= 7175) and: (~val < 8200), {~pModPart = round(~val.linlin(7175, 8199, 0, 10)*1000)/1000});
 			if(~val >= 8200, {~pMod2Index = round(~val.linlin(8200, 9224, 1, 8)*1000)/1000});

@@ -15,13 +15,9 @@ Textlabel ampLabel, panLabel, carFreqLabel, carPartLabel, modFreqLabel, modPartL
 
 
 void setup() {
-  size(1650, 900);
+  size(1650, 950);
   background(#0F655C);
   frameRate(100);
-  
-  noFill();
-  stroke(255);
-  strokeWeight(2);
   
   
   // We enstablish the connection with Supercollider
@@ -33,7 +29,7 @@ void setup() {
   
   amp = cp5.addKnob("Amplitude Knob")
      .setLabel("")
-     .setPosition(140, 100)
+     .setPosition(100, 130)
      .setRadius(120)
      .setHeight(150)
      .setRange(0, 1)
@@ -45,7 +41,7 @@ void setup() {
      
   pan = cp5.addKnob("Panning Knob")
      .setLabel("")
-     .setPosition(440, 100)
+     .setPosition(400, 130)
      .setRadius(120)
      .setHeight(150)
      .setRange(-1, 1)
@@ -55,73 +51,11 @@ void setup() {
      .setColorActive(color(#2482AD))
      .setColorCaptionLabel(color(255));
      
-  carFreq = cp5.addSlider("Carrier Frequency Slider")
-     .setLabel("")
-     .setLabel("")
-     .setSliderMode(Slider.FLEXIBLE)
-     .setPosition(150, 430)
-     .setSize(65, 350)
-     .setRange(0,3000)
-     .setValue(1000)
-     .setHandleSize(15)
-     .setColorBackground(color(#5E1724))
-     .setColorForeground(color(#7690D5))
-     .setColorActive(color(#8AA5EA));
-     
-  carPart = cp5.addSlider("Carrier Partials Slider")
-     .setLabel("")
-     .setSliderMode(Slider.FLEXIBLE)
-     .setPosition(300, 430)
-     .setSize(65, 350)
-     .setRange(1, 8)
-     .setDecimalPrecision(0)
-     .setValue(1)
-     .setHandleSize(15)
-     .setColorBackground(color(#5E1724))
-     .setColorForeground(color(#7690D5))
-     .setColorActive(color(#8AA5EA));    
-     
-  modFreq = cp5.addSlider("Modulator Frequency Slider")
-     .setLabel("")
-     .setSliderMode(Slider.FLEXIBLE)
-     .setPosition(450, 430)
-     .setSize(65, 350)
-     .setRange(0, 3000)
-     .setValue(0)
-     .setHandleSize(15)
-     .setColorBackground(color(#5E1724))
-     .setColorForeground(color(#7690D5))
-     .setColorActive(color(#8AA5EA));     
-     
-  modIndex = cp5.addSlider("Modulator Index Slider")
-     .setLabel("")
-     .setSliderMode(Slider.FLEXIBLE)
-     .setPosition(600, 430)
-     .setSize(65, 350)
-     .setRange(0, 10)
-     .setDecimalPrecision(0)
-     .setValue(200)
-     .setHandleSize(15)
-     .setColorBackground(color(#5E1724))
-     .setColorForeground(color(#7690D5))
-     .setColorActive(color(#8AA5EA));
-     
-  mod2Freq = cp5.addSlider("Second Modulator Frequency Slider")
-     .setLabel("")
-     .setSliderMode(Slider.FLEXIBLE)
-     .setPosition(750, 430)
-     .setSize(65, 350)
-     .setRange(0, 3000)
-     .setValue(1)
-     .setHandleSize(15)
-     .setColorBackground(color(#5E1724))
-     .setColorForeground(color(#7690D5))
-     .setColorActive(color(#8AA5EA));
-     
+        
   modPart = cp5.addKnob("Modulator Partials Knob")
      .setLabel("")
-     .setPosition(950, 500)
-     .setRadius(100)
+     .setPosition(100, 540)
+     .setRadius(120)
      .setHeight(150)
      .setRange(1, 8)
      .setDecimalPrecision(0)
@@ -134,8 +68,8 @@ void setup() {
           
   mod2Index = cp5.addKnob("Second Modulator Index Knob")
      .setLabel("")
-     .setPosition(1250, 500)
-     .setRadius(100)
+     .setPosition(400, 540)
+     .setRadius(120)
      .setHeight(150)
      .setRange(0, 10)
      .setDecimalPrecision(0)
@@ -145,61 +79,126 @@ void setup() {
      .setColorActive(color(#5EC5A8))
      .setColorCaptionLabel(color(0))
      .setColorValue(color(0));
+     
+  carFreq = cp5.addSlider("Carrier Frequency Slider")
+     .setLabel("")
+     .setLabel("")
+     .setSliderMode(Slider.FLEXIBLE)
+     .setPosition(800, 500)
+     .setSize(65, 350)
+     .setRange(0,3000)
+     .setValue(1000)
+     .setHandleSize(15)
+     .setColorBackground(color(#5E1724))
+     .setColorForeground(color(#7690D5))
+     .setColorActive(color(#8AA5EA));
+     
+  carPart = cp5.addSlider("Carrier Partials Slider")
+     .setLabel("")
+     .setSliderMode(Slider.FLEXIBLE)
+     .setPosition(950, 500)
+     .setSize(65, 350)
+     .setRange(1, 8)
+     .setDecimalPrecision(0)
+     .setValue(1)
+     .setHandleSize(15)
+     .setColorBackground(color(#5E1724))
+     .setColorForeground(color(#7690D5))
+     .setColorActive(color(#8AA5EA));    
+     
+  modFreq = cp5.addSlider("Modulator Frequency Slider")
+     .setLabel("")
+     .setSliderMode(Slider.FLEXIBLE)
+     .setPosition(1100, 500)
+     .setSize(65, 350)
+     .setRange(0, 3000)
+     .setValue(0)
+     .setHandleSize(15)
+     .setColorBackground(color(#5E1724))
+     .setColorForeground(color(#7690D5))
+     .setColorActive(color(#8AA5EA));     
+     
+  modIndex = cp5.addSlider("Modulator Index Slider")
+     .setLabel("")
+     .setSliderMode(Slider.FLEXIBLE)
+     .setPosition(1250, 500)
+     .setSize(65, 350)
+     .setRange(0, 10)
+     .setDecimalPrecision(0)
+     .setValue(200)
+     .setHandleSize(15)
+     .setColorBackground(color(#5E1724))
+     .setColorForeground(color(#7690D5))
+     .setColorActive(color(#8AA5EA));
+     
+  mod2Freq = cp5.addSlider("Second Modulator Frequency Slider")
+     .setLabel("")
+     .setSliderMode(Slider.FLEXIBLE)
+     .setPosition(1400, 500)
+     .setSize(65, 350)
+     .setRange(0, 3000)
+     .setValue(1)
+     .setHandleSize(15)
+     .setColorBackground(color(#5E1724))
+     .setColorForeground(color(#7690D5))
+     .setColorActive(color(#8AA5EA));
+  
   
   ampLabel = cp5.addTextlabel("Amplitude Label")
      .setText("Amplitude")
-     .setPosition(219, 345)
+     .setPosition(179, 375)
      .setColorValue(255)
      .setFont(createFont("Arial", 16));
      
   panLabel = cp5.addTextlabel("Panning Label")
      .setText("Panning")
-     .setPosition(525, 345)
+     .setPosition(485, 375)
+     .setColorValue(255)
+     .setFont(createFont("Arial", 16));
+     
+  modPartLabel = cp5.addTextlabel("Modulator Partials Label")
+     .setText("First Modulator Partials")
+     .setPosition(133, 790)
+     .setColorValue(255)
+     .setFont(createFont("Arial", 16));
+     
+  mod2IndexLabel = cp5.addTextlabel("Second Modulator Index Label")
+     .setText("Second Modulator Index")
+     .setPosition(428, 790)
      .setColorValue(255)
      .setFont(createFont("Arial", 16));
   
   carFreqLabel = cp5.addTextlabel("Carrier Frequency Label")
      .setText("   Carrier\nFrequency")
-     .setPosition(140, 785)
+     .setPosition(791, 855)
      .setColorValue(255)
      .setFont(createFont("Arial", 16));
      
   carPartLabel = cp5.addTextlabel("Carrier Partials Label")
      .setText("Carrier\nPartials")
-     .setPosition(300, 785)
+     .setPosition(952, 855)
      .setColorValue(255)
      .setFont(createFont("Arial", 16));
      
   modFreqLabel = cp5.addTextlabel("Modulator Frequency Label")
      .setText("    First\nModulator\nFrequency")
-     .setPosition(442, 785)
+     .setPosition(1094, 855)
      .setColorValue(255)
      .setFont(createFont("Arial", 16));
      
   modIndexLabel = cp5.addTextlabel("Modulator Index Label")
      .setText("    First\nModulator\n   Index")
-     .setPosition(593, 785)
+     .setPosition(1245, 855)
      .setColorValue(255)
      .setFont(createFont("Arial", 16));
      
      
   mod2FreqLabel = cp5.addTextlabel("Second Modulator Frequency Label")
      .setText("  Second\nModulator\nFrequency")
-     .setPosition(742, 785)
+     .setPosition(1394, 855)
      .setColorValue(255)
      .setFont(createFont("Arial", 16));
      
-  modPartLabel = cp5.addTextlabel("Modulator Partials Label")
-     .setText("First Modulator Partials")
-     .setPosition(968, 715)
-     .setColorValue(255)
-     .setFont(createFont("Arial", 16));
-     
-  mod2IndexLabel = cp5.addTextlabel("Second Modulator Index Label")
-     .setText("Second Modulator Index")
-     .setPosition(1262, 715)
-     .setColorValue(255)
-     .setFont(createFont("Arial", 16));
 }
 
 
@@ -212,46 +211,61 @@ float pcarfreq, pcarpart, pmodfreq, pmodpart,pmodindex, pmod2freq, pmod2index, p
 void draw() {
   background(#0F655C);
   
-  
-  // We draw the line on which the "wave interpreter" slides
-  line((6.5/12.0)*width, height/4, (10.0/12.0)*width, height/4);
-  
-  
   // We draw the ticks of the sliders
+  stroke(255);
+  
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 11; j++) {
-      line(140+(i*300), 437+(j*33.5), 145+(i*300), 437+(j*33.5));
+      line(790+(i*300), 507+(j*33.5), 795+(i*300), 507+(j*33.5));
     }
   }
   
   for (int j = 0; j < 8; j++) {
-    line(290, 437+(j*48) , 295, 437+(j*48));
+    line(940, 507+(j*48) , 945, 507+(j*48));
   }
   
   for (int j = 0; j < 11; j++) {
-    line(590, 437+(j*33.5) , 595, 437+(j*33.5));
+    line(1240, 507+(j*33.5) , 1245, 507+(j*33.5));
   }
   
   
-  // We draw the "wave interpreter" using polar coordinates and the function r()
+  // We create the screen where te "wave interpreter" will be placed
+  strokeWeight(10);
+  stroke(#ADB2B8, 200);
+  fill(#000000);
+  rect(700, 55, 875, 395, 7);
+  
+  
+  // We draw the line in the middle of the screen on which the "wave interpreter" slides
+  colorMode(HSB, 360);
+  stroke(pcarfreq/25.00 + pmodfreq/25.00 + pmod2freq/25.00, 360, 360);
+  strokeCap(SQUARE);
+  strokeWeight(2);
+  line((5.7/12.0)*width, height/3.8, (10.8/12.0)*width, height/3.8);
+  
+  
+  // We draw the "wave interpreter" inside the screen using polar coordinates and the function r()
+  stroke(pcarfreq/25.00 + pmodfreq/25.00 + pmod2freq/25.00, 360, 360);
+  strokeWeight(1.5);
   beginShape();
   
   for(float theta = 0; theta <= 2 * PI; theta += 0.01){
     float rad = r(
       theta,
-      1.0 + 30.0 * pamp,                                                                           //a
-      1.0 + 30.0 * pamp,                                                                           //b
+      0.5 + 20.0 * pamp,                                                                           //a
+      0.5 + 20.0 * pamp,                                                                           //b
       100.0 + (pcarfreq/10.0),                                                                     //m
       4.0,                                                                                         //n1
-      0.05 * sin((50.0+(pmodfreq/10.0))*t) + 1 + pmodpart/50.0 + pmodindex/40.0 + pmod2index/50.0, //n2
+      0.05 * sin((50.0+(pmodfreq/10.0))*t) + 1 + pmodindex/50.0 + pmodpart/40.0 + pmod2index/50.0, //n2
       0.05 * cos((50.0+(pmod2freq/10.0))*t) + 1                                                    //n3
     );
     float x = (1.75/12.0)*width * ppan + (8.25/12.0)*width + rad * cos(theta) * 50;
-    float y = height/4 + rad * sin(theta) * 50;
+    float y = height/3.8 + rad * sin(theta) * 50;
     vertex(x, y);
   }
   
   endShape();
+  colorMode(RGB, 255);
   
   t += 0.001;
   
@@ -278,6 +292,7 @@ float r(float theta, float a, float b, float m, float n1, float n2, float n3) {
 
 // We use this function to read incoming messages from Supercollider
 void oscEvent(OscMessage theOscMessage) {
+  
   pcarfreq = theOscMessage.get(0).floatValue();
   pcarpart = theOscMessage.get(1).floatValue();
   pmodfreq = theOscMessage.get(2).floatValue();
