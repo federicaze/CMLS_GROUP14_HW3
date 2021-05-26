@@ -9,8 +9,8 @@ NetAddress myRemoteLocation;
 ControlP5 cp5;
 
 // We declare the variables we need to draw the sliders and the knobs of the GUI
-Knob amp, pan, modPart, mod2Index;
-Slider carFreq, carPart, modFreq, modIndex, mod2Freq;
+Knob amp, pan, modIndex, mod2Index;
+Slider carFreq, carPart, modFreq, modPart, mod2Freq;
 Textlabel ampLabel, panLabel, carFreqLabel, carPartLabel, modFreqLabel, modPartLabel, modIndexLabel, mod2FreqLabel, mod2IndexLabel;
 
 
@@ -52,12 +52,12 @@ void setup() {
      .setColorCaptionLabel(color(255));
      
         
-  modPart = cp5.addKnob("Modulator Partials Knob")
+  modIndex = cp5.addKnob("Modulator Index Knob")
      .setLabel("")
      .setPosition(100, 540)
      .setRadius(120)
      .setHeight(150)
-     .setRange(1, 8)
+     .setRange(0, 10)
      .setDecimalPrecision(0)
      .setValue(0)
      .setColorBackground(color(#E8E8ED))
@@ -111,19 +111,19 @@ void setup() {
      .setSliderMode(Slider.FLEXIBLE)
      .setPosition(1100, 500)
      .setSize(65, 350)
-     .setRange(0, 3000)
+     .setRange(0, 5000)
      .setValue(0)
      .setHandleSize(15)
      .setColorBackground(color(#5E1724))
      .setColorForeground(color(#7690D5))
      .setColorActive(color(#8AA5EA));     
      
-  modIndex = cp5.addSlider("Modulator Index Slider")
+  modPart = cp5.addSlider("Modulator Partials Slider")
      .setLabel("")
      .setSliderMode(Slider.FLEXIBLE)
      .setPosition(1250, 500)
      .setSize(65, 350)
-     .setRange(0, 10)
+     .setRange(1, 8)
      .setDecimalPrecision(0)
      .setValue(200)
      .setHandleSize(15)
@@ -136,7 +136,7 @@ void setup() {
      .setSliderMode(Slider.FLEXIBLE)
      .setPosition(1400, 500)
      .setSize(65, 350)
-     .setRange(0, 3000)
+     .setRange(0, 5000)
      .setValue(1)
      .setHandleSize(15)
      .setColorBackground(color(#5E1724))
@@ -156,15 +156,15 @@ void setup() {
      .setColorValue(255)
      .setFont(createFont("Arial", 16));
      
-  modPartLabel = cp5.addTextlabel("Modulator Partials Label")
-     .setText("First Modulator Partials")
-     .setPosition(133, 790)
+  modIndexLabel = cp5.addTextlabel("Modulator Index Label")
+     .setText("Mod 1 Index")
+     .setPosition(173, 790)
      .setColorValue(255)
      .setFont(createFont("Arial", 16));
      
   mod2IndexLabel = cp5.addTextlabel("Second Modulator Index Label")
-     .setText("Second Modulator Index")
-     .setPosition(428, 790)
+     .setText("Mod 2 Index")
+     .setPosition(472, 790)
      .setColorValue(255)
      .setFont(createFont("Arial", 16));
   
@@ -181,20 +181,20 @@ void setup() {
      .setFont(createFont("Arial", 16));
      
   modFreqLabel = cp5.addTextlabel("Modulator Frequency Label")
-     .setText("    First\nModulator\nFrequency")
+     .setText("   Mod 1\nFrequency")
      .setPosition(1094, 855)
      .setColorValue(255)
      .setFont(createFont("Arial", 16));
      
-  modIndexLabel = cp5.addTextlabel("Modulator Index Label")
-     .setText("    First\nModulator\n   Index")
+  modPartLabel = cp5.addTextlabel("Modulator Partials Label")
+     .setText("   Mod 1\n  Partials")
      .setPosition(1245, 855)
      .setColorValue(255)
      .setFont(createFont("Arial", 16));
      
      
   mod2FreqLabel = cp5.addTextlabel("Second Modulator Frequency Label")
-     .setText("  Second\nModulator\nFrequency")
+     .setText("   Mod 2\nFrequency")
      .setPosition(1394, 855)
      .setColorValue(255)
      .setFont(createFont("Arial", 16));
@@ -212,6 +212,7 @@ void draw() {
   background(#0F655C);
   
   // We draw the ticks of the sliders
+  colorMode(RGB, 255);
   stroke(255);
   
   for (int i = 0; i < 3; i++) {
@@ -219,17 +220,14 @@ void draw() {
       line(790+(i*300), 507+(j*33.5), 795+(i*300), 507+(j*33.5));
     }
   }
-  
-  for (int j = 0; j < 8; j++) {
-    line(940, 507+(j*48) , 945, 507+(j*48));
-  }
-  
-  for (int j = 0; j < 11; j++) {
-    line(1240, 507+(j*33.5) , 1245, 507+(j*33.5));
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 8; j++) {
+      line(940+(i*300), 507+(j*48) , 945+(i*300), 507+(j*48));
+    }
   }
   
   
-  // We create the screen where te "wave interpreter" will be placed
+  // We create the screen where the "wave interpreter" will be placed
   strokeWeight(10);
   stroke(#ADB2B8, 200);
   fill(#000000);
@@ -238,15 +236,15 @@ void draw() {
   
   // We draw the line in the middle of the screen on which the "wave interpreter" slides
   colorMode(HSB, 360);
-  stroke(pcarfreq/25.00 + pmodfreq/25.00 + pmod2freq/25.00, 360, 360);
+  stroke(pcarfreq/30.00 + pmodfreq/38.47 + pmod2freq/38.47, 360, 360);
   strokeCap(SQUARE);
   strokeWeight(2);
   line((5.7/12.0)*width, height/3.8, (10.8/12.0)*width, height/3.8);
   
   
   // We draw the "wave interpreter" inside the screen using polar coordinates and the function r()
-  stroke(pcarfreq/25.00 + pmodfreq/25.00 + pmod2freq/25.00, 360, 360);
   strokeWeight(1.5);
+  strokeCap(ROUND);
   beginShape();
   
   for(float theta = 0; theta <= 2 * PI; theta += 0.01){
@@ -265,7 +263,6 @@ void draw() {
   }
   
   endShape();
-  colorMode(RGB, 255);
   
   t += 0.001;
   
