@@ -212,7 +212,6 @@ void draw() {
   background(#0F655C);
   
   // We draw the ticks of the sliders
-  colorMode(RGB, 255);
   stroke(255);
   
   for (int i = 0; i < 3; i++) {
@@ -263,6 +262,7 @@ void draw() {
   }
   
   endShape();
+  colorMode(RGB, 255);
   
   t += 0.001;
   
